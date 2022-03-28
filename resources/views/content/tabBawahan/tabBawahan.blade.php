@@ -6,7 +6,7 @@
     </div>
     <div class="row">
         <div class="col-lg-3">
-            <form action="" method="post" id="formBawahan">
+            <form action="" method="post" id="formBawahan" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
                     <label for="nama_bawahan" class="form-label">Nama Bawahan</label>
@@ -32,7 +32,7 @@
                 <label class="form-label" for="gambar_bawahan">Gambar Bawahan</label>
                 
                 <div class="input-group mb-4">
-                    <input type="file" class="form-control" id="gambar_bawahan" accept="image/png, image/jpeg">
+                    <input type="file" class="form-control" id="gambar_bawahan" name="gambar_bawahan" accept="image/png, image/jpeg">
                 </div>
                 
                 <label class="form-label" for="gambar_bawahan">Jumlah Bawahan</label>
@@ -49,7 +49,7 @@
                 <div id="formUkuranBawahan"></div>
     
                 <div class="buttonSubmit text-center">
-                    <button id="submitBawahan" type="button" class="btn btn-primary">Simpan</button>
+                    <button id="submitBawahan" type="submit" class="btn btn-primary">Simpan</button>
                 </div>
     
             </form>
@@ -103,24 +103,28 @@
     })
 
     // submit Bawahan
-    $('#submitBawahan').on('click',function () {
-
-        console.log($('#formBawahan').serialize());
+    $('#formBawahan').on('submit',function () {
+        event.preventDefault();
 
         $konfirm = confirm('yakin Simpan?');
 
         if($konfirm){
             $.ajax({
-                type:'POST',
+                method:'POST',
                 url: "{{ route('storeBawahan') }}",
-                data: $('#formBawahan').serialize(),
+                data:new FormData(this),
+                dataType:'JSON',
+                contentType: false,
+                cache: false,
+                processData: false,
                 success: function (data) {
-                    alert('berhasil');
+                    alert(data.message);
 
                     $('#TabBawahan').click();
                 },
                 error: function (data) {
                     alert('gagal');
+                    alert(data.message);
                 }
             })
         }

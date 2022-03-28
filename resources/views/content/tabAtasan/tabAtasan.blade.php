@@ -6,7 +6,10 @@
     </div>
     <div class="row">
         <div class="col-lg-3">
-            <form action="" method="post" id="formAtasan">
+
+            <div class="alert" id="message" style="display: none"></div>
+
+            <form action="" method="post" id="formAtasan" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
                     <label for="nama_atasan" class="form-label">Nama Atasan</label>
@@ -32,7 +35,7 @@
                 <label class="form-label" for="gambar_atasan">Gambar Atasan</label>
                 
                 <div class="input-group mb-4">
-                    <input type="file" class="form-control" id="gambar_atasan" accept="image/png, image/jpeg">
+                    <input type="file" class="form-control" name="gambar_atasan" id="gambar_atasan" accept="image/png, image/jpeg">
                 </div>
                 
                 <label class="form-label" for="gambar_atasan">Jumlah Atasan</label>
@@ -49,7 +52,7 @@
                 <div id="formUkuranAtasan"></div>
     
                 <div class="buttonSubmit text-center">
-                    <button id="submitAtasan" type="button" class="btn btn-primary">Simpan</button>
+                    <button id="submitAtasan" type="submit" class="btn btn-primary">Simpan</button>
                 </div>
     
             </form>
@@ -103,24 +106,28 @@
     })
 
     // submit atasan
-    $('#submitAtasan').on('click',function () {
-
-        console.log($('#formAtasan').serialize());
+    $('#formAtasan').on('submit',function () {
+        event.preventDefault();
 
         $konfirm = confirm('yakin Simpan?');
 
         if($konfirm){
             $.ajax({
-                type:'POST',
+                method:'POST',
                 url: "{{ route('storeAtasan') }}",
-                data: $('#formAtasan').serialize(),
+                data:new FormData(this),
+                dataType:'JSON',
+                contentType: false,
+                cache: false,
+                processData: false,
                 success: function (data) {
-                    alert('berhasil');
+                    alert(data.message);
 
                     $('#TabAtasan').click();
                 },
                 error: function (data) {
                     alert('gagal');
+                    alert(data.message);
                 }
             })
         }

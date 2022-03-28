@@ -10,6 +10,7 @@ use App\Models\Provinsi;
 use App\Models\Relasi_barang_provinsi;
 
 use Illuminate\Support\Str;
+use Validator;
 
 class aksesorisController extends Controller
 {
@@ -26,18 +27,50 @@ class aksesorisController extends Controller
 
     public function store(Request $request)
     {
-        $a = new Aksesoris;
-        $a->nama_aksesoris = $request->nama_aksesoris;
-        $a->kode_aksesoris = $request->kode_aksesoris;
-        $a->persediaan_aksesoris = $request->persediaan_aksesoris;
-        $a->keterangan_aksesoris = $request->keterangan_aksesoris;
-        $a->save();
+        $validation = Validator::make($request->all(), [
+            'gambar_aksesoris' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
 
-        for ($i=0; $i < count($request->idProvinsi_aksesoris); $i++) { 
-            $c = new Relasi_barang_provinsi;
-            $c->provinsi_id = $request->idProvinsi_aksesoris[$i];
-            $c->Aksesoris()->associate($a);
-            $c->save();
+        if($validation->passes()){
+            $image = $request->file('gambar_aksesoris');
+            $new_name = $request->nama_aksesoris. rand(0,99999) . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('gambar_aksesoris'), $new_name);
+
+            $a = new Aksesoris;
+            $a->nama_aksesoris = $request->nama_aksesoris;
+            $a->kode_aksesoris = $request->kode_aksesoris;
+            $a->persediaan_aksesoris = $request->persediaan_aksesoris;
+            $a->keterangan_aksesoris = $request->keterangan_aksesoris;
+            $a->gambar_aksesoris = $new_name;
+            $a->save();
+
+            for ($i=0; $i < count($request->idProvinsi_aksesoris); $i++) { 
+                $c = new Relasi_barang_provinsi;
+                $c->provinsi_id = $request->idProvinsi_aksesoris[$i];
+                $c->Aksesoris()->associate($a);
+                $c->save();
+            }
+            // wajib ada response ini kalau tidak akan error
+            return response()->json([
+                'message'   => 'Berhasil Input Data '.$request->nama_aksesoris,
+            ]);
+
+        }else{
+
+            return response()->json([
+                'message'   => $validation->errors()->all(),
+                'uploaded_image' => '',
+                'class_name'  => 'alert-danger'
+            ]);
         }
+    }
+
+    public function detailAksesoris(Request $request)
+    {
+        $id = $request->id;
+
+        $gambar_aksesoris = Aksesoris::find($id)->gambar_aksesoris;
+
+        return view('content.tabAksesoris.detailGambarAksesoris',compact('gambar_aksesoris'));
     }
 }

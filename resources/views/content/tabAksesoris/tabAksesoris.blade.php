@@ -6,7 +6,7 @@
     </div>
     <div class="row">
         <div class="col-lg-3">
-            <form action="" method="post" id="formAksesoris">
+            <form action="" method="post" id="formAksesoris" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
                     <label for="nama_aksesoris" class="form-label">Nama Aksesoris</label>
@@ -32,7 +32,7 @@
                 <label class="form-label" for="gambar_aksesoris">Gambar Aksesoris</label>
                 
                 <div class="input-group mb-4">
-                    <input type="file" class="form-control" id="gambar_aksesoris" accept="image/png, image/jpeg">
+                    <input type="file" class="form-control" id="gambar_aksesoris" name="gambar_aksesoris" accept="image/png, image/jpeg">
                 </div>
                 
                 
@@ -61,7 +61,7 @@
                 </div>
     
                 <div class="buttonSubmit text-center">
-                    <button id="submitAksesoris" type="button" class="btn btn-primary">Simpan</button>
+                    <button id="submitAksesoris" type="submit" class="btn btn-primary">Simpan</button>
                 </div>
     
             </form>
@@ -70,6 +70,7 @@
             <table class="table table-hover">
                 <tr>
                     <th>No</th>
+                    {{-- <th>Gambar</th> --}}
                     <th>Nama Aksesoris</th>
                     <th>Kode Aksesoris</th>
                     <th colspan="2">Keterangan</th>
@@ -78,8 +79,9 @@
                 <?php $i = 1;?>
                 @foreach ($data_aksesoris as $item)
 
-                <tr class="buttonDetailUkuran" data-id="{{$item['id']}}">
+                <tr class="buttonDetailAksesoris" data-id="{{$item['id']}}">
                     <td>{{$i}}</td>
+                    {{-- <td><img src="/gambar_aksesoris/{{$item['gambar_aksesoris']}}" alt="" width="10"></td> --}}
                     <td>{{$item['nama_aksesoris']}}</td>
                     <td>{{$item['kode_aksesoris']}}</td>
                     <td colspan="2">{{$item['keterangan_aksesoris']}}</td>
@@ -91,16 +93,25 @@
                 
             </table>
         </div>
-        
+        <div class="col-lg-4">
+            <div id="detailUkuran"></div>
+        </div>
     </div>
 </div>
 
 <script>
+    // detail Ukuran
+    $('.buttonDetailAksesoris').on('click',function () {
+
+        let id = $(this).data('id');
+        $.get("{{ route('detailAksesoris') }}",{id:id},function (data) {
+            $('#detailUkuran').html(data);
+        })
+    })
 
     // submit aksesoris
-    $('#submitAksesoris').on('click',function () {
-
-        console.log($('#formAksesoris').serialize());
+    $('#formAksesoris').on('submit',function () {
+        event.preventDefault();
 
         $konfirm = confirm('yakin Simpan?');
 
@@ -108,14 +119,19 @@
             $.ajax({
                 type:'POST',
                 url: "{{ route('storeAksesoris') }}",
-                data: $('#formAksesoris').serialize(),
+                data:new FormData(this),
+                dataType:'JSON',
+                contentType: false,
+                cache: false,
+                processData: false,
                 success: function (data) {
-                    alert('berhasil');
+                    alert(data.message);
 
                     $('#TabAksesoris').click();
                 },
                 error: function (data) {
                     alert('gagal');
+                    alert(data.message);
                 }
             })
         }
