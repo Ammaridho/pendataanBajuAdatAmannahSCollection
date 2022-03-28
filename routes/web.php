@@ -17,37 +17,46 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
+// layout
+Route::get('/','homeController@layout')->name('layout');
+
 // home
-Route::get('/','homeController@index')->name('home');
+Route::get('/home','homeController@indexHome')->name('indexHome');
 
-// tabAtasan =============================================================================
-Route::get('/tabAtasan','atasanController@tabAtasan')->name('tabAtasan');
+// Utama INPUT DATA ============================================================================
+Route::get('/inputData','homeController@inputData')->name('inputDataHome');
 
-    // store Atasan
-    Route::post('/tabAtasan/store','atasanController@store')->name('storeAtasan');
-    
-    // form ukuran atasan
-    Route::get('/tabAtasan/formUkuranAtasan','atasanController@formUkuranAtasan')->name('formUkuranAtasan');
+        // tabAtasan =============================================================================
+        Route::get('/inputData/tabAtasan','atasanController@tabAtasan')->name('tabAtasan');
 
-    // detail Ukuran Atasan
-    Route::get('/tabAtasan/detailUkuran','atasanController@detailUkuranAtasan')->name('detailUkuranAtasan');
+            // store Atasan
+            Route::post('/inputData/tabAtasan/store','atasanController@store')->name('storeAtasan');
+            
+            // form ukuran atasan
+            Route::get('/inputData/tabAtasan/formUkuranAtasan','atasanController@formUkuranAtasan')->name('formUkuranAtasan');
 
-
-// tabBawahan ============================================================================
-Route::get('/tabBawahan','bawahanController@tabBawahan')->name('tabBawahan');
-
-    // store Bawahan
-    Route::post('/tabBawahan/store','bawahanController@store')->name('storeBawahan');
-        
-    // form ukuran bawahan
-    Route::get('/tabBawahan/formUkuranBawahan','bawahanController@formUkuranBawahan')->name('formUkuranBawahan');
-
-    // detail Ukuran Bawahan
-    Route::get('/tabBawahan/detailUkuran','bawahanController@detailUkuranBawahan')->name('detailUkuranBawahan');
+            // detail Ukuran Atasan
+            Route::get('/inputData/tabAtasan/detailUkuran','atasanController@detailUkuranAtasan')->name('detailUkuranAtasan');
 
 
-// tabAksesoris ==========================================================================
-Route::get('/tabAksesoris','aksesorisController@tabAksesoris')->name('tabAksesoris');
+        // tabBawahan ============================================================================
+        Route::get('/inputData/tabBawahan','bawahanController@tabBawahan')->name('tabBawahan');
 
-    // store Aksesoris
-    Route::post('/tabAksesoris/store','aksesorisController@store')->name('storeAksesoris');
+            // store Bawahan
+            Route::post('/inputData/tabBawahan/store','bawahanController@store')->name('storeBawahan');
+                
+            // form ukuran bawahan
+            Route::get('/inputData/tabBawahan/formUkuranBawahan','bawahanController@formUkuranBawahan')->name('formUkuranBawahan');
+
+            // detail Ukuran Bawahan
+            Route::get('/inputData/tabBawahan/detailUkuran','bawahanController@detailUkuranBawahan')->name('detailUkuranBawahan');
+
+
+        // tabAksesoris ==========================================================================
+        Route::get('/inputData/tabAksesoris','aksesorisController@tabAksesoris')->name('tabAksesoris');
+
+            // store Aksesoris
+            Route::post('/inputData/tabAksesoris/store','aksesorisController@store')->name('storeAksesoris');
+
+        // tabBeranda ===========================================================================
+        Route::get('/inputData/tabBeranda','berandaController@tabBeranda')->name('tabBeranda');

@@ -1,0 +1,51 @@
+body {
+    background-color: #ffffff;
+}
+
+.navbar {
+    background-color: hsl(0, 53%, 56%);
+}
+
+.navbar-brand{
+    color: #ffffff;
+}
+
+button.nav-link.active{
+    background-color: #e0afa0;
+}
+
+.btn-primary {
+    background-color: hsl(0, 53%, 56%);
+    border: solid 1px #CED4DA;
+}
+
+.btn-primary:hover {
+    background-color: hsl(0, 53%, 56%);
+    border: solid 1px #CED4DA;
+}
+
+.nav{
+    color: aqua;
+}
+
+.nav-link{
+    color: #e0afa0;
+}
+
+.nav.flex-column.nav-pills.me-3.p-2{
+    background-color: #ffffff;
+}
+
+.nav.flex-column.nav-pills.me-3.p-2 .nav-link:hover {
+    /* background-color: #ffffff; */
+    color: hsl(0, 53%, 56%);
+}
+
+.nav.flex-column.nav-pills.me-3.p-2 .nav-link.active:hover {
+    /* background-color: #ffffff; */
+    color: #ffffff;
+}
+
+.nav.flex-column.nav-pills.me-3.p-2 .nav-link.active{
+    background-color: hsl(0, 53%, 56%);
+}

@@ -13,6 +13,15 @@
                     <input type="text" class="form-control" id="nama_aksesoris" name="nama_aksesoris">
                 </div>
 
+                @foreach ($provinsi as $item)
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="idProvinsi_aksesoris[]" id="{{$item['nama_provinsi']}}" value="{{$item['id']}}">
+                        <label class="form-check-label" for="{{$item['nama_provinsi']}}">
+                            {{$item['nama_provinsi']}}
+                        </label>
+                    </div>
+                @endforeach
+
                 <div class="input-group">
                     <label for="keterangan_aksesoris" class="form-label">Keterangan Aksesoris</label>
                 </div>

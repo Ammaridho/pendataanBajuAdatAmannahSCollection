@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Models\Bawahan;
 use App\Models\Chart_Bawahan;
+use App\Models\Provinsi;
+use App\Models\Relasi_barang_provinsi;
 
 use Illuminate\Support\Str;
 
@@ -13,8 +15,9 @@ class bawahanController extends Controller
 {
     public function tabBawahan()
     {
+        $provinsi = Provinsi::all();
         $data_bawahan = Bawahan::all();
-        return view('content.tabBawahan.tabBawahan',compact('data_bawahan'));
+        return view('content.tabBawahan.tabBawahan',compact('data_bawahan','provinsi'));
     }
 
     public function formUkuranBawahan(Request $request)
@@ -44,6 +47,13 @@ class bawahanController extends Controller
             $b->panjang_kaki = $request->panjang_kaki[$i];
             $b->Bawahan()->associate($a);
             $b->save();
+        }
+
+        for ($i=0; $i < count($request->idProvinsi_bawahan); $i++) { 
+            $c = new Relasi_barang_provinsi;
+            $c->provinsi_id = $request->idProvinsi_bawahan[$i];
+            $c->Bawahan()->associate($a);
+            $c->save();
         }
     }
 

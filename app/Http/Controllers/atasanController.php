@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\Atasan;
 use App\Models\Chart_Atasan;
 
+use App\Models\Relasi_barang_provinsi;
+
+use App\Models\Provinsi;
+
 use Illuminate\Support\Str;
 
 class atasanController extends Controller
@@ -14,8 +18,9 @@ class atasanController extends Controller
     
     public function tabAtasan()
     {
+        $provinsi = Provinsi::all();
         $data_atasan = atasan::all();
-        return view('content.tabAtasan.tabAtasan',compact('data_atasan'));
+        return view('content.tabAtasan.tabAtasan',compact('data_atasan','provinsi'));
     }
 
     public function formUkuranAtasan(Request $request)
@@ -47,6 +52,14 @@ class atasanController extends Controller
             $b->Atasan()->associate($a);
             $b->save();
         }
+
+        for ($i=0; $i < count($request->idProvinsi_atasan); $i++) { 
+            $c = new Relasi_barang_provinsi;
+            $c->provinsi_id = $request->idProvinsi_atasan[$i];
+            $c->Atasan()->associate($a);
+            $c->save();
+        }
+
     }
 
     public function detailUkuranAtasan(Request $request)
