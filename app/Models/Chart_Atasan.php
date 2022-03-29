@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Chart_Atasan extends Model
+class chart_atasan extends Model
 {
-    protected $table = 'Chart_Atasan';
+    protected $table = 'chart_atasan';
 
-    public function Atasan()
+    public function atasan()
     {
-        return $this->belongsTo(Atasan::class);
+        return $this->belongsTo(atasan::class);
     }
 }

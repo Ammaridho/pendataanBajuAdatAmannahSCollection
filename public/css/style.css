@@ -9,6 +9,12 @@ body {
 .navbar-brand{
     color: #ffffff;
 }
+.navbar-toggler{
+    background-color: #ffffff;
+}
+.navbar-toggler-icon{
+    border: solid 1px #257bd1;
+}
 
 button.nav-link.active{
     background-color: #e0afa0;

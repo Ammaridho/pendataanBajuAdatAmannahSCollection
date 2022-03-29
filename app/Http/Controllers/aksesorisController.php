@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Aksesoris;
-use App\Models\Chart_Aksesoris;
-use App\Models\Provinsi;
-use App\Models\Relasi_barang_provinsi;
+use App\Models\aksesoris;
+use App\Models\provinsi;
+use App\Models\relasi_barang_provinsi;
 
 use Illuminate\Support\Str;
 use Validator;
@@ -16,9 +15,9 @@ class aksesorisController extends Controller
 {
     public function tabAksesoris()
     {
-        $data_aksesoris = Aksesoris::all();
+        $data_aksesoris = aksesoris::all();
 
-        $provinsi = Provinsi::all();
+        $provinsi = provinsi::all();
 
         $kode = Str::random(5);
 
@@ -36,7 +35,7 @@ class aksesorisController extends Controller
             $new_name = $request->nama_aksesoris. rand(0,99999) . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('gambar_aksesoris'), $new_name);
 
-            $a = new Aksesoris;
+            $a = new aksesoris;
             $a->nama_aksesoris = $request->nama_aksesoris;
             $a->kode_aksesoris = $request->kode_aksesoris;
             $a->persediaan_aksesoris = $request->persediaan_aksesoris;
@@ -45,7 +44,7 @@ class aksesorisController extends Controller
             $a->save();
 
             for ($i=0; $i < count($request->idProvinsi_aksesoris); $i++) { 
-                $c = new Relasi_barang_provinsi;
+                $c = new relasi_barang_provinsi;
                 $c->provinsi_id = $request->idProvinsi_aksesoris[$i];
                 $c->Aksesoris()->associate($a);
                 $c->save();
@@ -69,7 +68,7 @@ class aksesorisController extends Controller
     {
         $id = $request->id;
 
-        $gambar_aksesoris = Aksesoris::find($id)->gambar_aksesoris;
+        $gambar_aksesoris = aksesoris::find($id)->gambar_aksesoris;
 
         return view('content.tabAksesoris.detailGambarAksesoris',compact('gambar_aksesoris'));
     }

@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Bawahan extends Model
+class bawahan extends Model
 {
-    protected $table = 'Bawahan';
+    protected $table = 'bawahan';
 
-    public function Chart_Bawahan()
+    public function chart_bawahan()
     {
-        return $this->hasMany(Chart_Bawahan::class);
+        return $this->hasMany(chart_bawahan::class);
     }
 }

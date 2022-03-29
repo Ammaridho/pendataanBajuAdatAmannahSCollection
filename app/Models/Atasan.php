@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Atasan extends Model
+class atasan extends Model
 {
-    protected $table = 'Atasan';
+    protected $table = 'atasan';
 
-    public function Chart_Atasan()
+    public function chart_atasan()
     {
-        return $this->hasMany(Chart_Atasan::class);
+        return $this->hasMany(chart_atasan::class);
     }
 
     // public function transaksi()

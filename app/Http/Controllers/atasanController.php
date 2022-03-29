@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Atasan;
-use App\Models\Chart_Atasan;
+use App\Models\atasan;
+use App\Models\chart_atasan;
 
-use App\Models\Relasi_barang_provinsi;
+use App\Models\relasi_barang_provinsi;
 
-use App\Models\Provinsi;
+use App\Models\provinsi;
 
 use Illuminate\Support\Str;
 
@@ -20,7 +20,7 @@ class atasanController extends Controller
     
     public function tabAtasan()
     {
-        $provinsi = Provinsi::all();
+        $provinsi = provinsi::all();
         $data_atasan = atasan::all();
         return view('content.tabAtasan.tabAtasan',compact('data_atasan','provinsi'));
     }
@@ -47,7 +47,7 @@ class atasanController extends Controller
             $new_name = $request->nama_atasan. rand(0,99999) . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('gambar_atasan'), $new_name);
 
-            $a = new Atasan;
+            $a = new atasan;
             $a->nama_atasan = $request->nama_atasan;
             $a->keterangan_atasan = $request->keterangan_atasan;
             $a->persediaan_atasan = $request->jumlahBaju;
@@ -55,20 +55,20 @@ class atasanController extends Controller
             $a->save();
 
             for ($i=0; $i < $request->jumlahBaju; $i++) { 
-                $b = new Chart_Atasan;
+                $b = new chart_atasan;
                 $b->kode_atasan = $request->kode_atasan[$i];
                 $b->ukuran_atasan = $request->ukuran_atasan[$i];
                 $b->lingkar_badan = $request->lingkar_badan[$i];
                 $b->panjang_lengan = $request->panjang_lengan[$i];
                 $b->lebar_dada = $request->lebar_dada[$i];
-                $b->Atasan()->associate($a);
+                $b->atasan()->associate($a);
                 $b->save();
             }
 
             for ($i=0; $i < count($request->idProvinsi_atasan); $i++) { 
-                $c = new Relasi_barang_provinsi;
+                $c = new relasi_barang_provinsi;
                 $c->provinsi_id = $request->idProvinsi_atasan[$i];
-                $c->Atasan()->associate($a);
+                $c->atasan()->associate($a);
                 $c->save();
             }
 
@@ -92,9 +92,9 @@ class atasanController extends Controller
     {
         $id = $request->id;
 
-        $detailUkuranAtasan = Chart_Atasan::where('atasan_id',$id)->get();
+        $detailUkuranAtasan = chart_atasan::where('atasan_id',$id)->get();
 
-        $gambar_atasan = Atasan::find($id)->gambar_atasan;
+        $gambar_atasan = atasan::find($id)->gambar_atasan;
 
         return view('content.tabAtasan.detailUkuranAtasan',compact('detailUkuranAtasan','gambar_atasan'));
     }

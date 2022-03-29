@@ -60,6 +60,7 @@ Route::get('/inputData','homeController@inputData')->name('inputDataHome');
 
             // store Aksesoris
             Route::get('/inputData/tabAksesoris/detailAksesoris','aksesorisController@detailAksesoris')->name('detailAksesoris');
+            
 
         // tabBeranda ===========================================================================
         Route::get('/inputData/tabBeranda','berandaController@tabBeranda')->name('tabBeranda');

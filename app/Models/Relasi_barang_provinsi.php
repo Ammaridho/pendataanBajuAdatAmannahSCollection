@@ -4,27 +4,27 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Relasi_barang_provinsi extends Model
+class relasi_barang_provinsi extends Model
 {
-    protected $table = 'Relasi_barang_provinsi';
+    protected $table = 'relasi_barang_provinsi';
 
-    public function Atasan()
+    public function atasan()
     {
-        return $this->belongsTo(Atasan::class);
+        return $this->belongsTo(atasan::class);
     }
 
-    public function Bawahan()
+    public function bawahan()
     {
-        return $this->belongsTo(Bawahan::class);
+        return $this->belongsTo(bawahan::class);
     }
 
-    public function Aksesoris()
+    public function aksesoris()
     {
-        return $this->belongsTo(Aksesoris::class);
+        return $this->belongsTo(aksesoris::class);
     }
 
-    public function Provinsi()
+    public function provinsi()
     {
-        return $this->belongsTo(Provinsi::class);
+        return $this->belongsTo(provinsi::class);
     }
 }

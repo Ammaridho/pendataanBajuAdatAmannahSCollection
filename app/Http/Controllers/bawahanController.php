@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Bawahan;
-use App\Models\Chart_Bawahan;
-use App\Models\Provinsi;
-use App\Models\Relasi_barang_provinsi;
+use App\Models\bawahan;
+use App\Models\chart_bawahan;
+use App\Models\provinsi;
+use App\Models\relasi_barang_provinsi;
 
 use Illuminate\Support\Str;
 use Validator;
@@ -16,8 +16,8 @@ class bawahanController extends Controller
 {
     public function tabBawahan()
     {
-        $provinsi = Provinsi::all();
-        $data_bawahan = Bawahan::all();
+        $provinsi = provinsi::all();
+        $data_bawahan = bawahan::all();
         return view('content.tabBawahan.tabBawahan',compact('data_bawahan','provinsi'));
     }
 
@@ -43,7 +43,7 @@ class bawahanController extends Controller
             $new_name = $request->nama_bawahan. rand(0,99999) . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('gambar_bawahan'), $new_name);
 
-            $a = new Bawahan;
+            $a = new bawahan;
             $a->nama_bawahan = $request->nama_bawahan;
             $a->keterangan_bawahan = $request->keterangan_bawahan;
             $a->persediaan_bawahan = $request->jumlahBaju;
@@ -51,19 +51,19 @@ class bawahanController extends Controller
             $a->save();
 
             for ($i=0; $i < $request->jumlahBaju; $i++) { 
-                $b = new Chart_Bawahan;
+                $b = new chart_bawahan;
                 $b->kode_bawahan = $request->kode_bawahan[$i];
                 $b->ukuran_bawahan = $request->ukuran_bawahan[$i];
                 $b->lingkar_pinggang = $request->lingkar_pinggang[$i];
                 $b->panjang_kaki = $request->panjang_kaki[$i];
-                $b->Bawahan()->associate($a);
+                $b->bawahan()->associate($a);
                 $b->save();
             }
 
             for ($i=0; $i < count($request->idProvinsi_bawahan); $i++) { 
-                $c = new Relasi_barang_provinsi;
+                $c = new relasi_barang_provinsi;
                 $c->provinsi_id = $request->idProvinsi_bawahan[$i];
-                $c->Bawahan()->associate($a);
+                $c->bawahan()->associate($a);
                 $c->save();
             }
             // wajib ada response ini kalau tidak akan error
@@ -85,9 +85,9 @@ class bawahanController extends Controller
     {
         $id = $request->id;
 
-        $detailUkuranBawahan = Chart_Bawahan::where('bawahan_id',$id)->get();
+        $detailUkuranBawahan = chart_bawahan::where('bawahan_id',$id)->get();
 
-        $gambar_bawahan = Bawahan::find($id)->gambar_bawahan;
+        $gambar_bawahan = bawahan::find($id)->gambar_bawahan;
 
         return view('content.tabBawahan.detailUkuranBawahan',compact('detailUkuranBawahan','gambar_bawahan'));
     }
