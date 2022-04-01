@@ -17,7 +17,7 @@ class CreateAtasanTable extends Migration
             $table->id();
             $table->string('nama_atasan',50);
             $table->string('gambar_atasan',50)->nullable();
-            $table->text('keterangan_atasan');
+            $table->text('keterangan_atasan')->nullable();
             $table->integer('persediaan_atasan');
             $table->timestamps();
         });

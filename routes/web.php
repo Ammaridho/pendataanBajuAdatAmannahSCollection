@@ -64,3 +64,7 @@ Route::get('/inputData','homeController@inputData')->name('inputDataHome');
 
         // tabBeranda ===========================================================================
         Route::get('/inputData/tabBeranda','berandaController@tabBeranda')->name('tabBeranda');
+
+
+// Data BAju
+Route::get('/baju','bajuController@index')->name('lihatBaju');

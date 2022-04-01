@@ -35,10 +35,17 @@ class bawahanController extends Controller
     public function store(Request $request)
     {
         $validation = Validator::make($request->all(), [
-            'gambar_bawahan' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'gambar_bawahan' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'nama_bawahan'   => 'required|max:50',
+            'persediaan_bawahan' => 'required|integer|min:1',
+            'keterangan_bawahan' => 'required',
+            'idProvinsi_bawahan' => 'required',
+            'ukuran_bawahan' => 'required|not_in:Pilih...',
+            'lingkar_pinggang' => 'required',
+            'panjang_kaki' => 'required',
         ]);
 
-        if($validation->passes()){
+        if($validation->passes() && $request->persediaan_bawahan > 0){
             $image = $request->file('gambar_bawahan');
             $new_name = $request->nama_bawahan. rand(0,99999) . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('gambar_bawahan'), $new_name);
@@ -46,11 +53,11 @@ class bawahanController extends Controller
             $a = new bawahan;
             $a->nama_bawahan = $request->nama_bawahan;
             $a->keterangan_bawahan = $request->keterangan_bawahan;
-            $a->persediaan_bawahan = $request->jumlahBaju;
+            $a->persediaan_bawahan = $request->persediaan_bawahan;
             $a->gambar_bawahan = $new_name;
             $a->save();
 
-            for ($i=0; $i < $request->jumlahBaju; $i++) { 
+            for ($i=0; $i < $request->persediaan_bawahan; $i++) { 
                 $b = new chart_bawahan;
                 $b->kode_bawahan = $request->kode_bawahan[$i];
                 $b->ukuran_bawahan = $request->ukuran_bawahan[$i];
@@ -69,14 +76,14 @@ class bawahanController extends Controller
             // wajib ada response ini kalau tidak akan error
             return response()->json([
                 'message'   => 'Berhasil Input Data '.$request->nama_bawahan,
+                'result'    => 'success'
             ]);
 
         }else{
 
             return response()->json([
-                'message'   => $validation->errors()->all(),
-                'uploaded_image' => '',
-                'class_name'  => 'alert-danger'
+                'message'   => 'Gagal, Isi data dengan lengkap!',
+                'result'    => 'error'
             ]);
         }
     }

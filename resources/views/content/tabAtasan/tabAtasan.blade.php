@@ -1,11 +1,12 @@
 <div class="container-fluid">
-    <div class="row">
+    <div class="row mt-1">
         <div class="col">
-            <h1 class="text-center">Input Atasan</h1>
+            <h1 class="text-center">Atasan</h1>
         </div>
     </div>
+    <hr style="margin-top:-5px">
     <div class="row">
-        <div class="col-lg-3">
+        <div class="col-lg-3 mb-5">
 
             <div class="alert" id="message" style="display: none"></div>
 
@@ -16,6 +17,9 @@
                     <input type="text" class="form-control" id="nama_atasan" name="nama_atasan">
                 </div>
 
+                <div class="input-group">
+                    <label for="keterangan_atasan" class="form-label">Provinsi</label>
+                </div>
                 <div class="row mb-3">
                     @foreach ($provinsi as $item)
                     <div class="col-6">
@@ -47,8 +51,8 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="input-group mb-3">
-                            <input type="number" class="form-control" placeholder="Jumlah Atasan" id="jumlahBaju" name="jumlahBaju">
-                            <button class="btn btn-outline-secondary" type="button" id="buttonJumlahBaju">Button</button>
+                            <input type="number" class="form-control" placeholder="Jumlah Atasan" id="persediaan_atasan" name="persediaan_atasan">
+                            <button class="btn btn-outline-secondary" type="button" id="buttonPersediaanBawahan">Button</button>
                         </div>
                     </div>
                 </div>
@@ -61,7 +65,7 @@
     
             </form>
         </div>
-        <div class="col-lg-5">
+        <div class="col-lg-5 mb-5">
             <table class="table table-hover">
                 <tr>
                     <th>No</th>
@@ -84,10 +88,9 @@
                 
             </table>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-4 mb-5">
             <div id="detailUkuran"></div>
         </div>
-        
     </div>
 </div>
 
@@ -102,8 +105,8 @@
     })
 
     // form Ukuran Atasan
-    $('#buttonJumlahBaju').on('click',function () {
-        let jb = $('#jumlahBaju').val();
+    $('#buttonPersediaanBawahan').on('click',function () {
+        let jb = $('#persediaan_atasan').val();
         $.get("{{ route('formUkuranAtasan') }}",{jb:jb},function (data) {
             $('#formUkuranAtasan').html(data);
         })
@@ -127,11 +130,13 @@
                 success: function (data) {
                     alert(data.message);
 
-                    $('#TabAtasan').click();
+                    if (data.result == 'success') {
+                        $('#TabAtasan').click();
+                    }
                 },
                 error: function (data) {
-                    alert('gagal');
-                    alert(data.message);
+                    // alert(data.message);
+                    alert('Gagal, Isi data dengan lengkap!');
                 }
             })
         }

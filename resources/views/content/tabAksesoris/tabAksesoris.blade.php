@@ -1,18 +1,22 @@
 <div class="container-fluid">
-    <div class="row">
+    <div class="row mt-1">
         <div class="col">
             <h1 class="text-center">Input Aksesoris</h1>
         </div>
     </div>
+    <hr style="margin-top:-5px">
     <div class="row">
-        <div class="col-lg-3">
+        <div class="col-lg-3 mb-5">
             <form action="" method="post" id="formAksesoris" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
                     <label for="nama_aksesoris" class="form-label">Nama Aksesoris</label>
                     <input type="text" class="form-control" id="nama_aksesoris" name="nama_aksesoris">
                 </div>
-
+                
+                <div class="input-group">
+                    <label for="keterangan_atasan" class="form-label">Provinsi</label>
+                </div>
                 <div class="row mb-3">
                     @foreach ($provinsi as $item)
                     <div class="col-6">
@@ -70,7 +74,7 @@
     
             </form>
         </div>
-        <div class="col-lg-5">
+        <div class="col-lg-5 mb-5">
             <table class="table table-hover">
                 <tr>
                     <th>No</th>
@@ -97,7 +101,7 @@
                 
             </table>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-4 mb-5">
             <div id="detailUkuran"></div>
         </div>
     </div>
@@ -131,11 +135,13 @@
                 success: function (data) {
                     alert(data.message);
 
-                    $('#TabAksesoris').click();
+                    if (data.result == 'success') {
+                        $('#TabAksesoris').click();
+                    }
                 },
                 error: function (data) {
-                    alert('gagal');
-                    alert(data.message);
+                    // alert(data.message);
+                    alert('Gagal, Isi data dengan lengkap!');
                 }
             })
         }

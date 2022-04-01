@@ -27,10 +27,14 @@ class aksesorisController extends Controller
     public function store(Request $request)
     {
         $validation = Validator::make($request->all(), [
-            'gambar_aksesoris' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'gambar_aksesoris' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'nama_aksesoris'   => 'required|max:50',
+            'persediaan_aksesoris' => 'required|integer|min:1',
+            'keterangan_aksesoris' => 'required',
+            'idProvinsi_aksesoris' => 'required'
         ]);
 
-        if($validation->passes()){
+        if($validation->passes() && $request->persediaan_aksesoris > 0){
             $image = $request->file('gambar_aksesoris');
             $new_name = $request->nama_aksesoris. rand(0,99999) . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('gambar_aksesoris'), $new_name);
@@ -52,14 +56,14 @@ class aksesorisController extends Controller
             // wajib ada response ini kalau tidak akan error
             return response()->json([
                 'message'   => 'Berhasil Input Data '.$request->nama_aksesoris,
+                'result'    => 'success'
             ]);
 
         }else{
 
             return response()->json([
-                'message'   => $validation->errors()->all(),
-                'uploaded_image' => '',
-                'class_name'  => 'alert-danger'
+                'message'   => 'Gagal, Isi data dengan lengkap!',
+                'result'    => 'error'
             ]);
         }
     }

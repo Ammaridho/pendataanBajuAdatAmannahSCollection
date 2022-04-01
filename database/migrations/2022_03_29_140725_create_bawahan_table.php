@@ -17,7 +17,7 @@ class CreateBawahanTable extends Migration
             $table->id();
             $table->string('nama_bawahan',50);
             $table->string('gambar_bawahan',50)->nullable();
-            $table->text('keterangan_bawahan');
+            $table->text('keterangan_bawahan')->nullable();
             $table->integer('persediaan_bawahan');
             $table->timestamps();
         });

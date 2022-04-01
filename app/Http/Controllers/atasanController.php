@@ -15,6 +15,8 @@ use Illuminate\Support\Str;
 
 use Validator;
 
+use Illuminate\Validation\Rule;
+
 class atasanController extends Controller
 {
     
@@ -39,7 +41,15 @@ class atasanController extends Controller
     public function store(Request $request)
     {
         $validation = Validator::make($request->all(), [
-            'gambar_atasan' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'gambar_atasan' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'nama_atasan'   => 'required|max:50',
+            'persediaan_atasan' => 'required|integer|min:1',
+            'keterangan_atasan' => 'required',
+            'idProvinsi_atasan' => 'required',
+            'ukuran_atasan' => 'required|not_in:Pilih...',
+            'lingkar_badan' => 'required',
+            'panjang_lengan' => 'required',
+            'lebar_dada' => 'required',
         ]);
 
         if($validation->passes()){
@@ -50,11 +60,11 @@ class atasanController extends Controller
             $a = new atasan;
             $a->nama_atasan = $request->nama_atasan;
             $a->keterangan_atasan = $request->keterangan_atasan;
-            $a->persediaan_atasan = $request->jumlahBaju;
+            $a->persediaan_atasan = $request->persediaan_atasan;
             $a->gambar_atasan = $new_name;
             $a->save();
 
-            for ($i=0; $i < $request->jumlahBaju; $i++) { 
+            for ($i=0; $i < $request->persediaan_atasan; $i++) { 
                 $b = new chart_atasan;
                 $b->kode_atasan = $request->kode_atasan[$i];
                 $b->ukuran_atasan = $request->ukuran_atasan[$i];
@@ -75,14 +85,14 @@ class atasanController extends Controller
             // wajib ada response ini kalau tidak akan error
             return response()->json([
                 'message'   => 'Berhasil Input Data '.$request->nama_atasan,
+                'result'    => 'success'
             ]);
 
         }else{
 
             return response()->json([
                 'message'   => $validation->errors()->all(),
-                'uploaded_image' => '',
-                'class_name'  => 'alert-danger'
+                'result'    => 'error'
             ]);
         }
 

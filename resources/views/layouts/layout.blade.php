@@ -13,27 +13,42 @@
     <title>Pendataan Barang Amcol</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="">Pendataan Barang Amanah'S Collection</a>
+    <div class="container-fluid">
+      <div class="row sticky-top">
+        <nav class="navbar navbar-expand-lg">
+          <a class="navbar-brand" href="">Pendataan Barang Amcol</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon">M</span>
+            <span class="navbar-toggler-icon"><svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="white" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+              <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+            </svg></span>
           </button>
+          
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" id="homeUtama" href="#">Home</a>
+                <a class="nav-link" id="homeUtama" href="#">Home</a>
               </li>
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a class="nav-link" id="inputData" href="#">Input Data</a>
+              </li> --}}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Input Data
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" id="TabAtasan" href="#">Atasan</a></li>
+                  <li><a class="dropdown-item" id="TabBawahan" href="#">Bawahan</a></li>
+                  <li><a class="dropdown-item" id="TabAksesoris" href="#">Aksesoris</a></li>
+                </ul>
               </li>
               <li class="nav-item">
                 <a class="nav-link" id="lihatData" href="#">Lihat Data</a>
               </li>
             </ul>
           </div>
-        </div>
-    </nav>
+        </nav>
+      </div>
+    </div>
 
     <div id="kontenUtama"></div>
 
@@ -47,23 +62,44 @@
 
   <script>
     $( document ).ready(function () {
-      $.get("{{ route('indexHome') }}",{},function (data) {
+      $.get("{{ route('indexHome') }}",function (data) {
           $('#kontenUtama').html(data);
       })
     })
 
     // buka home Utama
     $('#homeUtama').on('click',function () {
-      $.get("{{ route('indexHome') }}",{},function (data) {
+      $.get("{{ route('indexHome') }}",function (data) {
           $('#kontenUtama').html(data);
       })
     })
 
     // buka Input Data
-    $('#inputData').on('click',function () {
-      $.get("{{ route('inputDataHome') }}",{},function (data) {
+    $('.inputData').on('click',function () {
+      $.get("{{ route('inputDataHome') }}",function (data) {
           $('#kontenUtama').html(data);
       })
+    })
+
+    // buka tab atasan
+    $('#TabAtasan').on('click',function () {
+      $.get("{{ route('tabAtasan') }}",function (data) {
+          $('#kontenUtama').html(data);
+      })
+    })
+
+    // buka tab bawahan
+    $('#TabBawahan').on('click',function () {
+        $.get("{{ route('tabBawahan') }}",function (data) {
+            $('#kontenUtama').html(data);
+        })
+    })
+
+    // buka tab aksesoris
+    $('#TabAksesoris').on('click',function () {
+        $.get("{{ route('tabAksesoris') }}",function (data) {
+            $('#kontenUtama').html(data);
+        })
     })
   </script>
 </html>

@@ -1,11 +1,12 @@
 <div class="container-fluid">
-    <div class="row">
+    <div class="row mt-1">
         <div class="col">
             <h1 class="text-center">Input Bawahan</h1>
         </div>
     </div>
+    <hr style="margin-top:-5px">
     <div class="row">
-        <div class="col-lg-3">
+        <div class="col-lg-3 mb-5">
             <form action="" method="post" id="formBawahan" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
@@ -13,6 +14,9 @@
                     <input type="text" class="form-control" id="nama_bawahan" name="nama_bawahan">
                 </div>
 
+                <div class="input-group">
+                    <label for="keterangan_atasan" class="form-label">Provinsi</label>
+                </div>
                 <div class="row mb-3">
                     @foreach ($provinsi as $item)
                     <div class="col-6">
@@ -44,8 +48,8 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="input-group mb-3">
-                            <input type="number" class="form-control" placeholder="Jumlah Bawahan" id="jumlahBaju" name="jumlahBaju">
-                            <button class="btn btn-outline-secondary" type="button" id="buttonJumlahBaju">Button</button>
+                            <input type="number" class="form-control" placeholder="Jumlah Bawahan" id="persediaan_bawahan" name="persediaan_bawahan">
+                            <button class="btn btn-outline-secondary" type="button" id="buttonPersediaanBawahan">Button</button>
                         </div>
                     </div>
                 </div>
@@ -58,7 +62,7 @@
     
             </form>
         </div>
-        <div class="col-lg-5">
+        <div class="col-lg-5 mb-5">
             <table class="table table-hover">
                 <tr>
                     <th>No</th>
@@ -81,7 +85,7 @@
                 
             </table>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-4 mb-5">
             <div id="detailUkuranBawahan"></div>
         </div>
         
@@ -99,8 +103,8 @@
     })
 
     // form Ukuran Bawahan
-    $('#buttonJumlahBaju').on('click',function () {
-        let jb = $('#jumlahBaju').val();
+    $('#buttonPersediaanBawahan').on('click',function () {
+        let jb = $('#persediaan_bawahan').val();
         $.get("{{ route('formUkuranBawahan') }}",{jb:jb},function (data) {
             $('#formUkuranBawahan').html(data);
         })
@@ -124,11 +128,13 @@
                 success: function (data) {
                     alert(data.message);
 
-                    $('#TabBawahan').click();
+                    if (data.result == 'success') {
+                        $('#TabBawahan').click();
+                    }
                 },
                 error: function (data) {
-                    alert('gagal');
-                    alert(data.message);
+                    // alert(data.message);
+                    alert('Gagal, Isi data dengan lengkap!');
                 }
             })
         }
