@@ -20,6 +20,7 @@ class CreateAksesorisTable extends Migration
             $table->string('gambar_aksesoris',50)->nullable();
             $table->integer('persediaan_aksesoris');
             $table->text('keterangan_aksesoris')->nullable();
+            $table->integer('harga_aksesoris');
             $table->timestamps();
         });
     }

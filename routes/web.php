@@ -58,9 +58,14 @@ Route::get('/inputData','homeController@inputData')->name('inputDataHome');
             // store Aksesoris
             Route::post('/inputData/tabAksesoris/store','aksesorisController@store')->name('storeAksesoris');
 
-            // store Aksesoris
+            // detail Aksesoris
             Route::get('/inputData/tabAksesoris/detailAksesoris','aksesorisController@detailAksesoris')->name('detailAksesoris');
             
+            // buka form Edit Aksesoris
+            Route::post('/input/tabAksesoris/edit','aksesorisController@editForm')->name('editFormAksesoris');
+            
+            // store Edit Aksesoris
+            Route::post('/input/tabAksesoris/edit/store','aksesorisController@storeEdit')->name('storeEditAksesoris');
 
         // tabBeranda ===========================================================================
         Route::get('/inputData/tabBeranda','berandaController@tabBeranda')->name('tabBeranda');

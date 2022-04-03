@@ -42,7 +42,7 @@
                 </ul>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="lihatData" href="#">Lihat Data</a>
+                <a class="nav-link" id="lihatBaju" href="#">Lihat Baju</a>
               </li>
             </ul>
           </div>
@@ -100,6 +100,13 @@
         $.get("{{ route('tabAksesoris') }}",function (data) {
             $('#kontenUtama').html(data);
         })
+    })
+
+    // lihat Baju
+    $('#lihatBaju').on('click',function () {
+      $.get("{{ route('lihatBaju') }}",function (data) {
+          $('#kontenUtama').html(data);
+      })
     })
   </script>
 </html>
