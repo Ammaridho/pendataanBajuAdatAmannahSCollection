@@ -137,4 +137,19 @@ class aksesorisController extends Controller
 
         return view('content.tabAksesoris.detailGambarAksesoris',compact('dataAksesoris','id','relasiProvinsiAksesoris'));
     }
+
+    public function sortProvinsi(Request $request)
+    {
+        $idProvinsi = $request->idProvinsi;
+
+        if($idProvinsi == 'semua'){
+            $dataLengkapAksesoris = aksesoris::all();
+        }else{
+            $dataLengkapAksesoris = aksesoris::join('relasi_barang_provinsi', 'relasi_barang_provinsi.aksesoris_id', '=', 'aksesoris.id')
+                                ->where('relasi_barang_provinsi.provinsi_id',$idProvinsi)
+                                ->get();
+        }
+
+        return view('content/tabAksesoris/sortProvinsiAksesoris',compact('dataLengkapAksesoris'));
+    }
 }

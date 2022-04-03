@@ -66,6 +66,10 @@ Route::get('/inputData','homeController@inputData')->name('inputDataHome');
             
             // store Edit Aksesoris
             Route::post('/input/tabAksesoris/edit/store','aksesorisController@storeEdit')->name('storeEditAksesoris');
+            
+            // sortProvinsi
+            Route::get('/input/tabAksesoris/sortProvinsi','aksesorisController@sortProvinsi')->name('sortProvinsiAksesoris');
+
 
         // tabBeranda ===========================================================================
         Route::get('/inputData/tabBeranda','berandaController@tabBeranda')->name('tabBeranda');

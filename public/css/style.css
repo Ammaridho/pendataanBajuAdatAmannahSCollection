@@ -72,3 +72,9 @@ button.nav-link.active{
         padding: 10px;
     }
 }
+
+.listAksesoris{
+    overflow: auto;
+    width: 100%;
+    height: 100vh;
+}

@@ -101,37 +101,54 @@
             </form>
         </div>
         <div class="col-lg-5 mb-5">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        {{-- <th>Gambar</th> --}}
-                        <th>Nama</th>
-                        <th>Golongan</th>
-                        <th>Kode</th>
-                        <th colspan="2">Keterangan</th>
-                        <th>Persediaan</th>
-                        <th>Harga</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php $i = 1;?>
-                    @foreach ($data_aksesoris as $item)
-
-                    <tr class="buttonDetailAksesoris" data-id="{{$item['id']}}">
-                        <td>{{$i}}</td>
-                        <td>{{$item['nama_aksesoris']}}</td>
-                        <td>{{$item['golongan_aksesoris']}}</td>
-                        <td>{{$item['kode_aksesoris']}}</td>
-                        <td colspan="2">{{$item['keterangan_aksesoris']}}</td>
-                        <td>{{$item['persediaan_aksesoris']}}</td>
-                        <td>Rp.{{$item['harga_aksesoris']}}</td>
-                    </tr>
-                    
-                    <?php $i++;?>   
-                    @endforeach
-                </tbody>
-            </table>
+            <div class="row">
+                <div class="col-3" id="sortingBerdasarProvinsi">
+                    <select class="form-select">
+                        <option value="semua" selected>Pilih Provinsi...</option>
+                        @foreach ($provinsi as $item)
+                            <option value="{{$item['id']}}">{{$item['nama_provinsi']}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-4">
+                    <input class="form-control" type="search" placeholder="Cari Aksesoris.." aria-label="Search" id="textSearchAksesoris" name="textSearchAksesoris">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="listAksesoris">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    {{-- <th>Gambar</th> --}}
+                                    <th>Nama</th>
+                                    <th>Golongan</th>
+                                    <th>Kode</th>
+                                    <th colspan="2">Keterangan</th>
+                                    <th>Persediaan</th>
+                                    <th>Harga</th>
+                                </tr>
+                            </thead>
+                            <tbody id="listAksesoris">
+                                <?php $i = 1;?>
+                                @foreach ($data_aksesoris as $item)
+                                    <tr class="buttonDetailAksesoris" data-id="{{$item['id']}}">
+                                        <td>{{$i}}</td>
+                                        <td>{{$item['nama_aksesoris']}}</td>
+                                        <td>{{$item['golongan_aksesoris']}}</td>
+                                        <td>{{$item['kode_aksesoris']}}</td>
+                                        <td colspan="2">{{$item['keterangan_aksesoris']}}</td>
+                                        <td>{{$item['persediaan_aksesoris']}}</td>
+                                        <td>Rp.{{$item['harga_aksesoris']}}</td>
+                                    </tr>
+                                <?php $i++;?>   
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-lg-4 mb-5">
             <div id="detailUkuran"></div>
@@ -246,9 +263,24 @@
 
 
 <script>
-    // $('#submittest').on('click',function () {
-    //     alert('bisaa');
-    // })
+    // option provinsi selected
+    $("#sortingBerdasarProvinsi select").on('change',function () {
+        let idProvinsi = $(this).val();
+
+        $.get("{{ route('sortProvinsiAksesoris') }}",{idProvinsi:idProvinsi},function (data) {
+            $('#listAksesoris').html(data);
+        })
+    });
+
+     // search Aksesoris
+     $("#textSearchAksesoris").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+
+      $("#listAksesoris tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+
+    });
 
     // detail Ukuran
     $('.buttonDetailAksesoris').on('click',function () {
