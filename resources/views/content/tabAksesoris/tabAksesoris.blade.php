@@ -283,8 +283,7 @@
     });
 
     // detail Ukuran
-    $('.buttonDetailAksesoris').on('click',function () {
-
+    $('tr.buttonDetailAksesoris').on('click',function () {
         let id = $(this).data('id');
         $.get("{{ route('detailAksesoris') }}",{id:id},function (data) {
             $('#detailUkuran').html(data);
