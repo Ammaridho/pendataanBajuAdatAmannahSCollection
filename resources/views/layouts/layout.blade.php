@@ -44,6 +44,9 @@
               <li class="nav-item">
                 <a class="nav-link" id="lihatBaju" href="#">Lihat Baju</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" id="lihatTransaksi" href="#">Transaksi</a>
+              </li>
             </ul>
           </div>
         </nav>
@@ -61,9 +64,17 @@
   </body>
 
   <script>
+    // auto buka konten utama
     $( document ).ready(function () {
       $.get("{{ route('indexHome') }}",function (data) {
           $('#kontenUtama').html(data);
+      })
+    })
+
+    // buka transaksi
+    $('#lihatTransaksi').on('click',function () {
+      $.get("{{ route('lihatTransaksi') }}",function (data) {
+        $('#kontenUtama').html(data);
       })
     })
 

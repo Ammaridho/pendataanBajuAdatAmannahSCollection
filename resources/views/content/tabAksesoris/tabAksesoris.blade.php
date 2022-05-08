@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row mt-1">
         <div class="col">
-            <h1 class="text-center">Input Aksesoris</h1>
+            <h1 class="text-center">Aksesoris</h1>
         </div>
     </div>
     <hr style="margin-top:-5px">

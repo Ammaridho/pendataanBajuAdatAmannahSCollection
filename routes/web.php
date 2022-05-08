@@ -77,3 +77,6 @@ Route::get('/inputData','homeController@inputData')->name('inputDataHome');
 
 // Data BAju
 Route::get('/baju','bajuController@index')->name('lihatBaju');
+
+// Transaksi
+Route::get('/transaksi','transaksiController@lihatTransaksi')->name('lihatTransaksi');
